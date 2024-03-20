@@ -10,24 +10,26 @@ check_status() {
     echo -e "\e[32msucess\e[0m"
   else
     echo -e "\e[31mfailure\e[0m"
-  exit 2
+    exit 2
+  fi
 }
 
 App_PreReq() {
 print_task_heading "remove default content"
-rm -rf ${app_dir} $>>LOG
+rm -rf ${app_dir} &>>LOG
 check_status $?
 
 print_task_heading "make a directory"
-cd ${app_dir} $>>LOG
+mkdir ${app_dir} &>>LOG
 check_status $?
 
 print_task_heading "download app content"
-curl -o /tmp/${component}.zip https://expense-artifacts.s3.amazonaws.com/expense-${component}-v2.zip $>>LOG
+curl -o /tmp/${component}.zip https://expense-artifacts.s3.amazonaws.com/expense-${component}-v2.zip &>>LOG
 check_status $?
 
 print_task_heading "extract app content"
-unzip /tmp/${component}.zip $>>LOG
+cd ${app_dir} &>>LOG
+unzip /tmp/${component}.zip &>>LOG
 check_status $?
 
 }

@@ -22,14 +22,10 @@ dnf install nodejs -y &>>$LOG
 check_status $?
 
 print_task_heading "add user to app"
-id expense &&>>$LOG
-if [$? ne 0 ]; then
+id expense &>>$LOG
+if [$? -ne 0 ]; then
   useradd expense &>>$LOG
 fi
-check_status $?
-
-print_task_heading "download dependencies"
-npm install &&>>$LOG
 check_status $?
 
 print_task_heading "copy backend services"
@@ -37,6 +33,10 @@ cp backend.service /etc/systemd/system/backend.service &>>$LOG
 check_status $?
 
 App_PreReq
+print_task_heading "download dependencies"
+cd /app &>>LOG
+npm install &>>$LOG
+check_status $?
 
 print_task_heading "system enable"
 systemctl daemon-reload &>>$LOG

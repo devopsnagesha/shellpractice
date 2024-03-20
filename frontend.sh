@@ -1,4 +1,5 @@
 source common.sh
+
 app_dir=/urs/share/nginx/html
 component=frontend
 
@@ -12,8 +13,8 @@ check_status $?
 
 App_PreReq
 
-print_task_heading "System enable"
-sysytemctl enable nginx &>>$LOG
+print_task_heading "start nginx service"
+systemctl enable nginx &>>$LOG
 systemctl restart nginx &>>$LOG
 check_status $?
 
