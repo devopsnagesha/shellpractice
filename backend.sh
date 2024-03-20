@@ -41,7 +41,7 @@ check_status $?
 print_task_heading "system enable"
 systemctl daemon-reload &>>$LOG
 systemctl enable backend &>>$LOG
-systemctl restart backend &>>$LOG
+systemctl start backend &>>$LOG
 check_status $?
 
 print_task_heading "download mysql"
