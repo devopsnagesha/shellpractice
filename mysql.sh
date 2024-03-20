@@ -16,10 +16,9 @@ syatemctl enable mysqld &>>$LOG
 systemctl start mysqld &>>$LOG
 check_status $?
 
-print_task_heading "setup mysql password"
-
-echo 'show database' |mysql -h mysql-dev.angadicnc.online -uroot -p${mysql_root_password} &>>$LOG
-if [ $? -ne 0 ]; then
-  mysql_secure_installation --set-root-pass ${mysql_root_password} &>>$LOG
-fi
-check_status $?
+Print_Task_Heading "Setup MySQL Password"
+ echo 'show databases' |mysql -h mysql-dev.angadicnc.online -uroot -p${mysql_root_password} &>>$LOG
+ if [ $? -ne 0 ]; then
+   mysql_secure_installation --set-root-pass ${mysql_root_password} &>>$LOG
+ fi
+ Check_Status $?
