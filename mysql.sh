@@ -7,18 +7,18 @@ if [ -z ${mysql_root_password} ]; then
 fi
 
 print_task_heading "install mysql server"
-dnf install mysql-server -y $>>$LOG
+dnf install mysql-server -y &>>$LOG
 check_status $?
 
 print_task_heading "enable mysql"
-syatemctl enable mysqld $>>$LOG
-systemctl start mysqld $>>$LOG
+syatemctl enable mysqld &>>$LOG
+systemctl start mysqld &>>$LOG
 check_status $?
 
 print_task_heading "setup mysql password"
 
-echo 'show database' | mysql -h mysql-dev.angadicnc.online -uroot -p${mysql_root_password} $>>$LOG
+echo 'show database' | mysql -h mysql-dev.angadicnc.online -uroot -p${mysql_root_password} &>>$LOG
 if [ $? ne 0 ]; then
-  mysql_secure_installation --set-root-pass ${mysql_root_password} $>>$LOG
+  mysql_secure_installation --set-root-pass ${mysql_root_password} &>>$LOG
 fi
 check_status $?
